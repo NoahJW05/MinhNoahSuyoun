@@ -1,7 +1,12 @@
 #include "Game.hpp"
+#include "TextureManager.hpp"
+#include "GameObject.hpp"
+#include "Map.hpp"
 
-SDL_Texture* playerTex;
-SDL_Rect srcR, destR;
+GameObject* player;
+Map* map;
+
+SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game()
 {}
@@ -45,10 +50,9 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
         isRunning = false;
     }
 
-    SDL_Surface* tmpSurface;
-    tmpSurface = IMG_Load("ProjectPNG/katanna.png");
-    playerTex=SDL_CreateTextureFromSurface(renderer,tmpSurface);
-    SDL_FreeSurface(tmpSurface);
+   player = new GameObject("ProjectPNG/GrassTopRightCorner.png",0,0);
+   map = new Map();
+
 }
 
 void Game::handleEvents()
@@ -68,9 +72,8 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    player->Update();
     cnt++;
-    destR.h =32*5;
-    destR.w =32*5;
 
 
     std::cout<<cnt<<std::endl;
@@ -80,7 +83,8 @@ void Game::render()
 {
     SDL_RenderClear(renderer);
     //where stuff whould be placed to renderer
-    SDL_RenderCopy(renderer,playerTex,NULL,&destR);
+    map->DrawMap();
+    //player->Render();
     SDL_RenderPresent(renderer);
 }
 

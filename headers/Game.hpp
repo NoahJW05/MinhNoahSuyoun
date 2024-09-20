@@ -7,10 +7,10 @@
 
 class Game {
  private:
- int cnt=0;
+   
+   int cnt=0;
     bool isRunning;
     SDL_Window *window;
-    SDL_Renderer *renderer;
 
  public:
     Game();
@@ -21,6 +21,8 @@ class Game {
     void update();
     void render();
     void clean();
+   
+   static SDL_Renderer *renderer;
 
     bool running(){return isRunning;};
 };
