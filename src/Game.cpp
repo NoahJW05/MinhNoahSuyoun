@@ -2,9 +2,10 @@
 #include "TextureManager.hpp"
 #include "GameObject.hpp"
 #include "Map.hpp"
+#include "Player.hpp"
 
 //all objects and player sprites texture load
-GameObject* player;
+Player* player;
 Map* map;
 GameObject* disk;
 
@@ -52,7 +53,7 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
         isRunning = false;
     }
     //inilize sprites and player surface and textures.
-    player = new GameObject("ProjectPNG/Pig.png",960/2,640/2);
+    player = new Player(100,100,"ProjectPNG/Pig.png",960/2,640/2);
     disk = new GameObject("ProjectPNG/disk.png",32,32);
 
     //maps

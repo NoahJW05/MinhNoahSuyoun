@@ -5,7 +5,7 @@
 
 class GameObject
 {
-    private:
+    protected:
         int xpos;
         int ypos;
 
@@ -13,7 +13,7 @@ class GameObject
         SDL_Rect srcRect, destRect;
     
     public:
-
+        GameObject();
         GameObject(const char* texturesheet,int x,int y);
         ~GameObject();
 
