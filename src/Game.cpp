@@ -50,7 +50,7 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
         isRunning = false;
     }
 
-   player = new GameObject("ProjectPNG/GrassTopRightCorner.png",0,0);
+   player = new GameObject("ProjectPNG/katanna.png",0,0,100,100,1);
    map = new Map();
 
 }
@@ -84,7 +84,7 @@ void Game::render()
     SDL_RenderClear(renderer);
     //where stuff whould be placed to renderer
     map->DrawMap();
-    //player->Render();
+    player->Render();
     SDL_RenderPresent(renderer);
 }
 
