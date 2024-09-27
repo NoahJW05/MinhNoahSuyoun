@@ -4,10 +4,10 @@
 #include "Map.hpp"
 #include "Player.hpp"
 
-//all objects and player sprites texture load
+
+//inilize diffrent game objects with there type an a pointer
 Player* player;
 Map* map;
-GameObject* disk;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -52,18 +52,16 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
     {
         isRunning = false;
     }
-    //inilize sprites and player surface and textures.
-    player = new Player(100,100,"ProjectPNG/Pig.png",960/2,640/2);
-    disk = new GameObject("ProjectPNG/disk.png",32,32);
 
-    //maps
-    map = new Map();
-
+//inilize the diffrent obejets with there constructors
+   player = new Player("ProjectPNG/katanna.png",0,0,32,32,2,100,25,2);
+   map = new Map();
 
 }
 
 void Game::handleEvents()
 {
+    //exits the window
     SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.type)
@@ -75,12 +73,30 @@ void Game::handleEvents()
     default:
         break;
     }
+
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    if(state[SDL_SCANCODE_W])
+    {
+        player->MovePlayer("up");
+    }
+    
+    if(state[SDL_SCANCODE_S])
+    {
+        player->MovePlayer("down");
+    }
+        if(state[SDL_SCANCODE_A])
+    {
+        player->MovePlayer("left");
+    }
+        if(state[SDL_SCANCODE_D])
+    {
+        player->MovePlayer("right");
+    }
 }
 
 void Game::update()
 {
     player->Update();
-    disk->Update();
     cnt++;
 
 
@@ -93,7 +109,6 @@ void Game::render()
     //where stuff whould be placed to renderer
     map->DrawMap();
     player->Render();
-    disk->Render();
     SDL_RenderPresent(renderer);
 }
 
@@ -103,9 +118,8 @@ void Game::clean()
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
 
-    std::cout <<"Game Cleaned"<<std::endl;
+    std::cout << "Game Cleaned"<<std::endl;
 }
-
 
 
 

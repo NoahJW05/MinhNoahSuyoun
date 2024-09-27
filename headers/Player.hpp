@@ -1,41 +1,28 @@
-#ifndef Player_hpp
-#define Player_hpp
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 #include "Game.hpp"
 #include "GameObject.hpp"
+#include <string>
 
-using std::string;
-
-class Player : public GameObject 
+class Player: public GameObject
 {
-protected:
-    int Health;
-    int Damage;
-    string weapons; 
-     string getWeapon() const;
+    protected:
+    int health;
+    int damage;
+    int velocity;
+    int speed;
+    std::string direction;
+
+    public:
+
+    Player(const char* texturesheet, int x, int y, int IMHeight, int IMWidth,int scale,int health,int damage,int Speed);
     
-    //void attack(Player *Ememy);
-    void setWeapon(std::string w);
-    int PosX; 
-    int PosY;
-    int Velocity;
-    GameObject* player;
-
-
-
-public:
-    Player(int health, int damage,const char* texturesheet,int x,int y);
-    ~Player();
-
-    //void attack(Player *Enemey);
-    void takeDamage(int dmg);
-
-    void setHealth(int health);
-    void setDamage(int damage);
-
-    int getHealth() const;
-    int getDamage() const;
-
+    void MovePlayer(std::string direction);
+    void Update();
+    void Render();
     
 };
+
 
 #endif
