@@ -3,7 +3,7 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**", 
+                "${workspaceFolder}/**",
                 "${workspaceFolder}/src/include",
                 "${workspaceFolder}/headers"
             ],
@@ -12,9 +12,7 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "C:\\MinGW\\bin\\g++.exe",
-            "cppStandard": "gnu++14",
-            "intelliSenseMode": "windows-gcc-x86"
+            "compilerPath": "C:\\MinGW\\bin\\g++.exe"
         }
     ],
     "version": 4

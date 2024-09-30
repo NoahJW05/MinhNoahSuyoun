@@ -1,25 +1,14 @@
-#ifndef Projectile_hpp
-#define Projectile_hpp
-
-#include <string>
-#include <SDL2/SDL.h>
-
-class Projectile {
-protected:
-    float x, y;       
-    float speed;      
-    int damage;       
-    SDL_Texture* texture; 
-    SDL_Rect rect;    
-
-public:
-    Projectile(float startX, float startY, float spd, int dmg, SDL_Texture* tex);
-
-    virtual void updatePosition(float deltaTime) = 0; 
-
-    virtual void render(SDL_Renderer* renderer);
-
-    virtual ~Projectile();
+#ifndef PROJECTILE_HPP
+#define PROJECTILE_HPP
+#include "GameObject.hpp"
+class Projectile:public GameObject{
+    protected:
+        int speed;
+        int direction;
+        bool isActive;
+    private:
+    
+    void Projectile::Render();
+    void Projectile::Update();
 };
-
-#endif // Projectile_HPP
+#endif 
