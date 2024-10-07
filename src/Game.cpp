@@ -3,11 +3,15 @@
 #include "GameObject.hpp"
 #include "Map.hpp"
 #include "Player.hpp"
+#include "KeyboardInput.hpp"
 
 
 //inilize diffrent game objects with there type an a pointer
 Player* player;
 Map* map;
+KeyboardInput* Input;
+//diffrent menus
+GameObject* Menu;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -54,8 +58,11 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
     }
 
 //inilize the diffrent obejets with there constructors
-   player = new Player("ProjectPNG/katanna.png",0,0,32,32,2,100,25,2);
+   player = new Player("ProjectPNG/katanna.png",0,0,32,32,4,100,25,9);
    map = new Map();
+   Input = new KeyboardInput();
+   //menu
+   Menu=new GameObject("ProjectPNG/Menu.png",0,0,640,960,1);
 
 }
 
@@ -73,42 +80,61 @@ void Game::handleEvents()
     default:
         break;
     }
+//handels keyboardInputs and what they do
+    Input->KeyInputDetedctor(player);
 
-    const Uint8* state = SDL_GetKeyboardState(NULL);
-    if(state[SDL_SCANCODE_W])
-    {
-        player->MovePlayer("up");
-    }
-    
-    if(state[SDL_SCANCODE_S])
-    {
-        player->MovePlayer("down");
-    }
-        if(state[SDL_SCANCODE_A])
-    {
-        player->MovePlayer("left");
-    }
-        if(state[SDL_SCANCODE_D])
-    {
-        player->MovePlayer("right");
-    }
 }
 
 void Game::update()
 {
-    player->Update();
+    if(Input->inMenu==false){
+        //in game view
+        player->Update();
+    }else if(Input->inMenu==true){
+        //in menu view
+        Menu->Update();
+
+        if(Input->inSettings==true){
+            //settings menu
+
+        }else if(Input->inHelpMenu){
+            //help menu
+
+        }
+    }
     cnt++;
 
 
     std::cout<<cnt<<std::endl;
+
+
 }
 
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    //where stuff whould be placed to renderer
-    map->DrawMap();
-    player->Render();
+    //where stuff whould be placed to renderer/controls which menu 
+    //state the games in menu or game
+
+    if(Input->inMenu==false){
+        //in game view
+        map->DrawMap();
+        player->Render();
+
+    }else if(Input->inMenu==true){
+        //in menu view
+        Menu->Render();
+        if(Input->inSettings==true){
+            //settings menu
+
+        }else if(Input->inHelpMenu){
+            //help menu
+
+        }
+    }
+
+
+
     SDL_RenderPresent(renderer);
 }
 
