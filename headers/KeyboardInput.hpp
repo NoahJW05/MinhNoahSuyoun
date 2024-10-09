@@ -7,14 +7,15 @@
 class KeyboardInput
 {
     protected:
-
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    int count;
     public:
-
         KeyboardInput();
         void KeyInputDetedctor(Player* player);
 
                    //determinds which menu games is in
         bool inMenu;
+        bool inGame;
         bool inSettings;
         bool inHelpMenu;
 };

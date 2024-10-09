@@ -10,9 +10,11 @@
 Player* player;
 Map* map;
 KeyboardInput* Input;
+
 //diffrent menus
 GameObject* Menu;
-
+GameObject* HelpMenu;
+GameObject* SettingsMenu;
 SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game()
@@ -58,12 +60,14 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
     }
 
 //inilize the diffrent obejets with there constructors
-   player = new Player("ProjectPNG/katanna.png",0,0,32,32,4,100,25,9);
+   player = new Player("ProjectPNG/katanna.png",0,0,32,32,4,100,25,4);
    map = new Map();
    Input = new KeyboardInput();
+
    //menu
    Menu=new GameObject("ProjectPNG/Menu.png",0,0,640,960,1);
-
+   HelpMenu=new GameObject("ProjectPNG/HelpMenu.png",0,0,640,960,1);
+   SettingsMenu=new GameObject("ProjectPNG/SettingsMenu.png",0,0,640,960,1);
 }
 
 void Game::handleEvents()
@@ -87,25 +91,27 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    if(Input->inMenu==false){
+    if(Input->inGame==1){
         //in game view
         player->Update();
-    }else if(Input->inMenu==true){
+        
+    }else if(Input->inMenu==1){
         //in menu view
         Menu->Update();
 
-        if(Input->inSettings==true){
-            //settings menu
+    }else if(Input->inSettings==1){
+        //settings menu
+         SettingsMenu->Update();
 
-        }else if(Input->inHelpMenu){
-            //help menu
+    }else if(Input->inHelpMenu==1){
+        //help menu
+        HelpMenu->Update();
 
-        }
     }
     cnt++;
 
 
-    std::cout<<cnt<<std::endl;
+    std::cout<<Input->inGame<<std::endl;
 
 
 }
@@ -116,21 +122,24 @@ void Game::render()
     //where stuff whould be placed to renderer/controls which menu 
     //state the games in menu or game
 
-    if(Input->inMenu==false){
+    if(Input->inGame==1){
         //in game view
         map->DrawMap();
         player->Render();
-
-    }else if(Input->inMenu==true){
+        
+        
+    }else if(Input->inMenu==1){
         //in menu view
         Menu->Render();
-        if(Input->inSettings==true){
-            //settings menu
 
-        }else if(Input->inHelpMenu){
-            //help menu
+    }else if(Input->inSettings==1){
+        //settings menu
+         SettingsMenu->Render();
 
-        }
+    }else if(Input->inHelpMenu==1){
+        //help menu
+        HelpMenu->Render();
+
     }
 
 
