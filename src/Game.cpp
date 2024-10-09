@@ -57,6 +57,8 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
    player = new Player("ProjectPNG/Pig.png",0,0,32,32,2,100,25,2);
    map = new Map();
 
+   //bullet = new 
+
 }
 
 void Game::handleEvents()

@@ -2,13 +2,15 @@
 #define PROJECTILE_HPP
 #include "GameObject.hpp"
 class Projectile:public GameObject{
-    protected:
+    private:
         int speed;
         int direction;
-        bool isActive;
+        bool active;
     private:
-    
-    void Projectile::Render();
-    void Projectile::Update();
+    Projectile (const char* texturesheet, int x, int y, int IMHeight, int IMWidth, int scale, int Speed, int Direction);
+
+    void Render();
+    void Update();
+    bool isActive() const;
 };
 #endif 
