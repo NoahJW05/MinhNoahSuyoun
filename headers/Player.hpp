@@ -5,24 +5,24 @@
 #include "GameObject.hpp"
 #include <string>
 
-class Player: public GameObject
+class Player : public GameObject
 {
-    protected:
+protected:
     int health;
     int damage;
     int velocity;
     int speed;
     std::string direction;
 
-    public:
+public:
+    Player(const char *texturesheet, int x, int y, int IMHeight, int IMWidth, int scale, int health, int damage, int velocity);
 
-    Player(const char* texturesheet, int x, int y, int IMHeight, int IMWidth,int scale,int health,int damage,int Speed);
-    
     void MovePlayer(std::string direction);
     void Update();
     void Render();
-    
-};
 
+    int getX() const { return xpos; }
+    int getY() const { return ypos; }
+};
 
 #endif
