@@ -9,7 +9,7 @@
 //inilize diffrent game objects with there type an a pointer
 Player* player;
 Map* map;
-Gun* projectile;
+Projectile* projectile;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -59,7 +59,7 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
    player = new Player("ProjectPNG/Pig.png",0,0,32,32,2,100,25,2);
    map = new Map();
 
-   projectile = new Gun("ProjectPNG//kunai.png",0,0,32,32,2,1,2);
+   projectile = new Projectile("ProjectPNG//kunai.png",0,0,32,32,4,2,45);
 }
 
 void Game::handleEvents()
@@ -99,7 +99,10 @@ void Game::handleEvents()
 
 void Game::update()
 {
+
     player->Update();
+    projectile->Update();
+
     cnt++;
 
 
@@ -112,7 +115,11 @@ void Game::render()
     //where stuff whould be placed to renderer
     map->DrawMap();
     player->Render();
+    projectile->Render();
+
+
     SDL_RenderPresent(renderer);
+    
 }
 
 void Game::clean()

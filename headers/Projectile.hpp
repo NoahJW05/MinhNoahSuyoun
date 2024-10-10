@@ -14,8 +14,10 @@ class Projectile:public GameObject{
         bool active;
     public:
     Projectile (const char* texturesheet, int x, int y, int IMHeight, int IMWidth, int scale, int speed, int direction);
+    ~Projectile();
     void Render();
     void Update();
+    void MoveProjectile(int direction);
     bool isActive() const;
 };
 #endif 

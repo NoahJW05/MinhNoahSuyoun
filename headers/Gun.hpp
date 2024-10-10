@@ -4,8 +4,8 @@
 #include <vector>
 class Gun {
     private:
-        int reloadTime;             // Time between shots
-        int timeSinceLastShot;  
+        int reloadTime;            // Time between shots
+         
         int damage;    // Timer to track when the gun can fire again
         std::vector<Projectile*> projectiles;  // List of active projectiles
     public:
