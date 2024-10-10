@@ -32,7 +32,7 @@ void KeyboardInput::KeyInputDetedctor(Player* player)
         {
             player->MovePlayer("right");
         }
-        if(count % 7 ==0){
+        if(count % 10 ==0){
         if(state[SDL_SCANCODE_ESCAPE]){
             inGame=0;
             inMenu=1;
@@ -40,7 +40,7 @@ void KeyboardInput::KeyInputDetedctor(Player* player)
         count=0;
         }
     }else if(inGame==false){
-        if(count % 7 ==0){
+        if(count % 10 ==0){
             //control menu
             if(inMenu==true){
                 if(state[SDL_SCANCODE_ESCAPE]){
