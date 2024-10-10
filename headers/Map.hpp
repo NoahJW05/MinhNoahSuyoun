@@ -20,7 +20,7 @@ class Map {
     //Center texture
         SDL_Texture* GrassC;
 
-int map[30][20];
+int map[20][30];
 
 public:
  Map();

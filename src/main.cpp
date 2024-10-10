@@ -16,6 +16,7 @@ int frameTime;
 
 //create game window and determined size
 game = new Game();
+//960,640
 game->initilize("GameTest",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,960,640,0);
 
 while(game->running())
