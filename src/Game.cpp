@@ -3,11 +3,13 @@
 #include "GameObject.hpp"
 #include "Map.hpp"
 #include "Player.hpp"
+#include "Projectile.hpp"
 
 
 //inilize diffrent game objects with there type an a pointer
 Player* player;
 Map* map;
+Gun* projectile;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -57,8 +59,7 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
    player = new Player("ProjectPNG/Pig.png",0,0,32,32,2,100,25,2);
    map = new Map();
 
-   //bullet = new 
-
+   projectile = new Gun("ProjectPNG//kunai.png",0,0,32,32,2,1,2);
 }
 
 void Game::handleEvents()

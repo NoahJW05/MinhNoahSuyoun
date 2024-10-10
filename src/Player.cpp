@@ -2,7 +2,8 @@
 #include <string>
 
 
-Player::Player(const char* texturesheet, int x, int y, int IMHeight, int IMWidth,int scale,int Health,int Damage,int Speed):GameObject(texturesheet,x,y,IMHeight,IMWidth,scale),health(Health),damage(Damage),speed(Speed){velocity=1;}
+Player::Player(const char* texturesheet, int x, int y, int IMHeight, int IMWidth,int scale,int Health,int Damage,int Speed):
+GameObject(texturesheet,x,y,IMHeight,IMWidth,scale),health(Health),damage(Damage),speed(Speed){velocity=1;}
 
 
 void Player::MovePlayer(std::string direction)

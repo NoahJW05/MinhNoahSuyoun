@@ -1,10 +1,7 @@
 #include "Projectile.hpp"
-#include "Game.hpp"
 #include <cmath>
 Projectile::Projectile(const char* texturesheet, int x, int y, int IMHeight, int IMWidth, int scale, int speed, int direction)
-    : GameObject(texturesheet, x, y, IMHeight, IMWidth, scale), speed(speed), direction(direction)
-{
-}
+    : GameObject(texturesheet, x, y, IMHeight, IMWidth, scale), speed(speed), direction(direction){velocity=1;}
 
 void Projectile::Update(){
     double radians = direction * M_PI / 180.0; 
@@ -16,7 +13,7 @@ void Projectile::Update(){
 
 bool Projectile:: isActive()const{
     //check if projectile is in bound
-    return xpos < 0 || xpos > 960 || ypos < 0 || ypos > 640; 
+    return xpos >= 0 || xpos <= 960 || ypos >= 0 || ypos <= 640; 
 }
 
 void Projectile::Render()

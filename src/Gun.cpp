@@ -1,5 +1,6 @@
 #include "Gun.hpp"
 #include "Projectile.hpp"
+#include <iostream>
 
 Gun::Gun(int cooldown) : reloadTime(cooldown), timeSinceLastShot(0), damage(damage){}
 Gun::~Gun(){

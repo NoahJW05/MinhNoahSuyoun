@@ -20,7 +20,7 @@ class Player: public GameObject
     
     void MovePlayer(std::string direction);
     void Update();
-    void Render();
+    void Render(); 
     
 }; 
 
