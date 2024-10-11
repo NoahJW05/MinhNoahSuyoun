@@ -3,6 +3,7 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 
 class KeyboardInput
 {
@@ -11,9 +12,8 @@ class KeyboardInput
     int count;
     public:
         KeyboardInput();
-        void KeyInputDetedctor(Player* player);
+        void KeyInputDetedctor(Player* player, Enemy* enemy);
 
-                   //determinds which menu games is in
         bool inMenu;
         bool inGame;
         bool inSettings;

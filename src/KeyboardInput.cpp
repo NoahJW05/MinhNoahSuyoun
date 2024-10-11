@@ -9,7 +9,7 @@ KeyboardInput::KeyboardInput()
     count=0;
 }
 
-void KeyboardInput::KeyInputDetedctor(Player* player)
+void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
 {
     count++;
     
@@ -18,19 +18,23 @@ void KeyboardInput::KeyInputDetedctor(Player* player)
         
         if(state[SDL_SCANCODE_W])
         {
-            player->MovePlayer("up");
+            player->MovePlayer(90);
+            enemy->FollowPlayer(player);
         }
         if(state[SDL_SCANCODE_S])
         {
-            player->MovePlayer("down");
+            player->MovePlayer(270);
+            enemy->FollowPlayer(player);
         }
         if(state[SDL_SCANCODE_A])
         {
-            player->MovePlayer("left");
+            player->MovePlayer(180);
+            enemy->FollowPlayer(player);
         }
         if(state[SDL_SCANCODE_D])
         {
-            player->MovePlayer("right");
+            player->MovePlayer(0);
+            enemy->FollowPlayer(player);
         }
         if(count % 10 ==0){
         if(state[SDL_SCANCODE_ESCAPE]){

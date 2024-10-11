@@ -4,10 +4,13 @@
 #include "Map.hpp"
 #include "Player.hpp"
 #include "KeyboardInput.hpp"
+#include "Enemy.hpp"
+
 
 
 //inilize diffrent game objects with there type an a pointer
 Player* player;
+Enemy* enemy;
 Map* map;
 KeyboardInput* Input;
 
@@ -60,8 +63,10 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
     }
 
 //inilize the diffrent obejets with there constructors
-   player = new Player("ProjectPNG/katanna.png",0,0,32,32,4,100,25,4);
+   player = new Player("ProjectPNG/Police.png",32,32,0,0,4,100,25,4);
    map = new Map();
+   enemy = new Enemy("ProjectPNG/Demon.png",32,32,960/2,640/2,4,player);
+
    Input = new KeyboardInput();
 
    //menu
@@ -85,7 +90,7 @@ void Game::handleEvents()
         break;
     }
 //handels keyboardInputs and what they do
-    Input->KeyInputDetedctor(player);
+    Input->KeyInputDetedctor(player,enemy);
 
 }
 
@@ -94,6 +99,9 @@ void Game::update()
     if(Input->inGame==1){
         //in game view
         player->Update();
+        
+        enemy->FollowPlayer(player);
+        enemy->Update();    
         
     }else if(Input->inMenu==1){
         //in menu view
@@ -111,7 +119,7 @@ void Game::update()
     cnt++;
 
 
-    std::cout<<Input->inGame<<std::endl;
+    std::cout<<cnt<<std::endl;
 
 
 }
@@ -126,7 +134,10 @@ void Game::render()
         //in game view
         map->DrawMap();
         player->Render();
+
         
+        enemy->Render();
+
         
     }else if(Input->inMenu==1){
         //in menu view

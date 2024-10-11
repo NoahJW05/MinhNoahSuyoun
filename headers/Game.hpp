@@ -10,7 +10,6 @@ class Game {
  private:
    
    int cnt=0;
-   //determents if the game has run and if not stops it
     bool isRunning;
     SDL_Window *window;
 
@@ -32,4 +31,4 @@ class Game {
 
 };
 
-#endif /*Game_hpp*/
+#endif 
