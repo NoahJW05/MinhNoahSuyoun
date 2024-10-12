@@ -1,0 +1,22 @@
+#ifndef COLLISON_HPP
+#define COLLISON_HPP
+
+#include "Game.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+
+class Collison
+{
+private:
+
+public:
+Collison();
+//how the function works
+//beenHit(what is attacking,what is been hit,attacker hit box radius,enemy/victim hitbox radius);
+
+bool beenHit(Enemy* enemy,Player* player,float ARadius,float DRadius);
+
+
+};
+
+#endif //COLLISON_HPP
