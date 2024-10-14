@@ -3,14 +3,26 @@
 #include "GameObject.hpp"
 #include "Map.hpp"
 #include "Player.hpp"
+#include "KeyboardInput.hpp"
 #include "Projectile.hpp"
+#include "Enemy.hpp"
+#include "Gun.hpp"
+#include "Disk.hpp"
 
 
 //inilize diffrent game objects with there type an a pointer
 Player* player;
-Map* map;
+Enemy* enemy;
 Projectile* projectile;
 
+Map* map;
+Disk* disk;
+KeyboardInput* Input;
+
+//diffrent menus
+GameObject* Menu;
+GameObject* HelpMenu;
+GameObject* SettingsMenu;
 SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game()
@@ -56,10 +68,19 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
     }
 
 //inilize the diffrent obejets with there constructors
-   player = new Player("ProjectPNG/Pig.png",0,0,32,32,2,100,25,2);
+   player = new Player("ProjectPNG/Pig.png",32,32,0,0,4,100,25,4);
    map = new Map();
+   
+   disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 90.0f, 70, 10,0.5,20);
+   projectile = new Projectile("ProjectPNG/katana.png", player, 32, 32, 10, 10, 45);  
+   enemy = new Enemy("ProjectPNG/fire.png",32,32,960/2,640/2,4,player);
 
-   projectile = new Projectile("ProjectPNG//kunai.png",0,0,32,32,4,2,45);
+   Input = new KeyboardInput();
+
+   //menu
+   Menu=new GameObject("ProjectPNG/Menu.png",0,0,640,960,1);
+   HelpMenu=new GameObject("ProjectPNG/HelpMenu.png",0,0,640,960,1);
+   SettingsMenu=new GameObject("ProjectPNG/SettingsMenu.png",0,0,640,960,1);
 }
 
 void Game::handleEvents()
@@ -76,50 +97,78 @@ void Game::handleEvents()
     default:
         break;
     }
+//handels keyboardInputs and what they do
+    Input->KeyInputDetedctor(player,enemy);
 
-    const Uint8* state = SDL_GetKeyboardState(NULL);
-    if(state[SDL_SCANCODE_W])
-    {
-        player->MovePlayer("up");
-    }
-    
-    if(state[SDL_SCANCODE_S])
-    {
-        player->MovePlayer("down");
-    }
-        if(state[SDL_SCANCODE_A])
-    {
-        player->MovePlayer("left");
-    }
-        if(state[SDL_SCANCODE_D])
-    {
-        player->MovePlayer("right");
-    }
 }
 
 void Game::update()
 {
+    if(Input->inGame==1){
+        //in game view
+        player->Update();
+        projectile-> Update();        
+        disk->Update(0.1f);
 
-    player->Update();
-    projectile->Update();
 
+        enemy->FollowPlayer(player);
+        enemy->Update();    
+        
+    }else if(Input->inMenu==1){
+        //in menu view
+        Menu->Update();
+
+    }else if(Input->inSettings==1){
+        //settings menu
+         SettingsMenu->Update();
+
+    }else if(Input->inHelpMenu==1){
+        //help menu
+        HelpMenu->Update();
+
+    }
     cnt++;
 
 
     std::cout<<cnt<<std::endl;
+
+
 }
 
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    //where stuff whould be placed to renderer
-    map->DrawMap();
-    player->Render();
-    projectile->Render();
+    //where stuff whould be placed to renderer/controls which menu 
+    //state the games in menu or game
+
+    if(Input->inGame==1){
+        //in game view
+        map->DrawMap();
+        player->Render();
+        projectile->Update();
+        disk -> Render();
+
+        
+        enemy->Render();
+
+        
+    }else if(Input->inMenu==1){
+        //in menu view
+        Menu->Render();
+
+    }else if(Input->inSettings==1){
+        //settings menu
+         SettingsMenu->Render();
+
+    }else if(Input->inHelpMenu==1){
+        //help menu
+        HelpMenu->Render();
+
+    }
+
 
 
     SDL_RenderPresent(renderer);
-    
 }
 
 void Game::clean()
@@ -130,7 +179,6 @@ void Game::clean()
 
     std::cout << "Game Cleaned"<<std::endl;
 }
-
 
 
 

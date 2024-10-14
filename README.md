@@ -1,2 +1,2 @@
-# NoahGameDev
-Practice making games and applications
+# oop-Project35
+Our groups project with is a game
