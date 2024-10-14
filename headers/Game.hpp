@@ -15,7 +15,8 @@ class Game {
     SDL_Window *window;
 
    //timer to track elapsed time
-    Uint32 timer; 
+   Uint32 timer; 
+   Uint32 elapsedTime;
 
  public:
     Game();
