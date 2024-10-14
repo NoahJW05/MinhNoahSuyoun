@@ -8,13 +8,14 @@
 #include "Enemy.hpp"
 #include "Gun.hpp"
 #include "Disk.hpp"
+#include "Sword.hpp"
 
 
 //inilize diffrent game objects with there type an a pointer
 Player* player;
 Enemy* enemy;
 Projectile* projectile;
-
+Sword* sword;
 Map* map;
 Disk* disk;
 KeyboardInput* Input;
@@ -33,6 +34,8 @@ Game::~Game()
 
 void Game::initilize(const char* title, int xpos, int ypos, int width, int height,bool fullscreen) 
 {
+    //gets time
+    timer = SDL_GetTicks(); // Record the start time
     //determinds if game is in fullscreen
     int flags = 0;
     if(fullscreen)
@@ -71,8 +74,11 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
    player = new Player("ProjectPNG/Pig.png",32,32,0,0,4,100,25,4);
    map = new Map();
    
-   disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 90.0f, 70, 10,0.5,20);
-   projectile = new Projectile("ProjectPNG/katana.png", player, 32, 32, 10, 10, 45);  
+   disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 90.0f, 70, 10,0.2,20);
+   sword = new Sword("ProjectPNG/katanna.png", 32,32, player,2,1 ,0, 0);
+   
+   
+   projectile = new Projectile("ProjectPNG/katanna.png", player, 32, 32, 10, 10, 45);  
    enemy = new Enemy("ProjectPNG/fire.png",32,32,960/2,640/2,4,player);
 
    Input = new KeyboardInput();
@@ -104,13 +110,15 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    Uint32 elapsedTime = (SDL_GetTicks() - timer)/1000;
+    std::cout << "Time passed: " << elapsedTime << " s" << std::endl;
+
     if(Input->inGame==1){
         //in game view
         player->Update();
         projectile-> Update();        
         disk->Update(0.1f);
-
-
+        sword ->Update();
         enemy->FollowPlayer(player);
         enemy->Update();    
         
@@ -147,8 +155,7 @@ void Game::render()
         player->Render();
         projectile->Update();
         disk -> Render();
-
-        
+        sword-> Render();        
         enemy->Render();
 
         

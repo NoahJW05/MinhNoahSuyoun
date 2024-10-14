@@ -14,6 +14,9 @@ class Game {
     bool isRunning;
     SDL_Window *window;
 
+   //timer to track elapsed time
+    Uint32 timer; 
+
  public:
     Game();
     ~Game();

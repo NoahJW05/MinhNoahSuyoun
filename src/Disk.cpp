@@ -16,7 +16,7 @@ void Disk::Update(float deltaTime) {
     }
 
     // Calculate the disk's new position based on the player's position and the current angle
-    fxpos = player->fxpos + radius * cosf(angle)-100;  // X position relative to the player
+    fxpos = player->fxpos + radius * cosf(angle)-110;  // X position relative to the player
     fypos = player->fypos + radius * sinf(angle)-70;  // Y position relative to the player
 
     GameObject::fUpdate();
