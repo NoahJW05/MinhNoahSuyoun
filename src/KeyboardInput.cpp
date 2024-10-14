@@ -19,22 +19,22 @@ void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
         if(state[SDL_SCANCODE_W])
         {
             player->MovePlayer(90);
-            enemy->FollowPlayer(player);
+            
         }
         if(state[SDL_SCANCODE_S])
         {
             player->MovePlayer(270);
-            enemy->FollowPlayer(player);
+            
         }
         if(state[SDL_SCANCODE_A])
         {
             player->MovePlayer(180);
-            enemy->FollowPlayer(player);
+            
         }
         if(state[SDL_SCANCODE_D])
         {
             player->MovePlayer(0);
-            enemy->FollowPlayer(player);
+            
         }
         if(count % 10 ==0){
         if(state[SDL_SCANCODE_ESCAPE]){
