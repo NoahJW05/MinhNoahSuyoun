@@ -13,6 +13,7 @@ class KeyboardInput
     public:
         KeyboardInput();
         void KeyInputDetedctor(Player* player, Enemy* enemy);
+        
 
         bool inMenu;
         bool inGame;

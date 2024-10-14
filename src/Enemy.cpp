@@ -2,41 +2,55 @@
 #include <cmath> 
 #include <math.h>
 
-Enemy::Enemy(const char *texturesheet, int x, int y, int IMHeight, int IMWidth, int scale, Player* player) 
-    : GameObject(texturesheet, x, y, IMHeight, IMWidth, scale) 
+Enemy::Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, Player* player) 
+    : GameObject(texturesheet, IMHeight, IMWidth, fx, fy,scale) 
 {
     this->player = player;
     isAlive = true;
-    speed = 1;
+    speed = 0.5;
+    angle=90*(M_PI/180);
 }
 
 void Enemy::SpawnEnemyRandomly()
 {
-    xpos = 960 / 2; 
-    ypos = 640 / 2; 
+    int minX=0;
+    int minY=0;
+    int maxX=960;
+    int maxY;
 
-    destRect.x = xpos;
-    destRect.y = ypos;
+
+    fxpos = minX + std::rand() % (maxX - minX + 1);
+    fypos = minY + std::rand() % (maxY - minX + 1); 
+
+    destRect.x = fxpos;
+    destRect.y = fypos;
 }
 
 void Enemy::FollowPlayer(Player* player)
 {
+float deltaX = player->fxpos - this->fxpos;
+float deltaY = player->fypos - this->fypos;
 
-    int deltaX = (player->xpos - this->xpos);
-    int deltaY = (player->ypos - this->ypos);
+// Get the angle to the player in radians
+angle = atan2(deltaY, deltaX);
 
-    float angle = (atan(deltaX/deltaY))*M_PI/180;
-    xpos =+ speed * cos(angle);
-    ypos =+ speed * sin(angle);
+// Normalize the angle between -π and π
+while (angle < -M_PI) {
+    angle += 2 * M_PI;
+}
+while (angle > M_PI) {
+    angle -= 2 * M_PI;
+}
 
-
-
+// Move the enemy towards the player using the normalized angle
+this->fxpos += speed * cos(angle);
+this->fypos += speed * sin(angle);
 }
 
 void Enemy::Update()
 {
     FollowPlayer(player);
-    GameObject::Update();
+    GameObject::fUpdate();
 }
 
 void Enemy::Render()

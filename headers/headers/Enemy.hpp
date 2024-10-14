@@ -4,7 +4,7 @@
 #include "Player.hpp"
 #include "GameObject.hpp"
 #include <cmath> 
-#include <cstdlib> 
+#include <cstdlib>  
 #include <ctime>   
 #include <math.h>
 
@@ -30,4 +30,3 @@ class Enemy : public GameObject {
 
 
 #endif
-

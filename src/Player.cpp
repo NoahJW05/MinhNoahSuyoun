@@ -1,34 +1,43 @@
 #include "Player.hpp"
 #include <string>
 
-Player::Player(const char *texturesheet, int x, int y, int IMHeight, int IMWidth, int scale, int Health, int Damage, int velocity) : GameObject(texturesheet, x, y, IMHeight, IMWidth, scale), health(Health), damage(Damage), velocity(velocity) { }
+Player::Player(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, int Health, int Damage, int velocity) : GameObject(texturesheet, IMHeight, IMWidth, fx, fy,scale), health(Health), damage(Damage), velocity(velocity) { }
 
 void Player::MovePlayer(int angle)
 {
     if (angle == 90) {
-        ypos -= velocity; 
+        fypos -= velocity; 
         
     }
     if (angle == 270) {
-        ypos += velocity; 
+        fypos += velocity; 
 
     }
     if (angle == 0) {
-        xpos += velocity; 
+        fxpos += velocity; 
         
     }
     if (angle == 180) {
-        xpos -= velocity; 
+        fxpos -= velocity; 
        
     }
 }
 
 void Player::Update()
 {
-    GameObject::Update();
+    GameObject::fUpdate();
 }
  
 void Player::Render()
 {
     GameObject::Render();
+}
+
+void Player::reduceHealth(int amount)
+{
+    health -= amount;
+    if(health<0){
+        health = 0;
+    }
+
 }

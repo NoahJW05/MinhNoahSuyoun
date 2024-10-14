@@ -5,14 +5,27 @@
 #include "Player.hpp"
 #include "KeyboardInput.hpp"
 #include "Enemy.hpp"
+#include "Collison.hpp"
+#include "Gun.hpp"
+#include "Sword.hpp"
+#include "Disk.hpp"
 
 
 
 //inilize diffrent game objects with there type an a pointer
 Player* player;
 Enemy* enemy;
+
+//weapons
+Disk* disk;
+Sword* sword;
+
+//input management and map
 Map* map;
 KeyboardInput* Input;
+
+//collison detection class
+Collison* collison;
 
 //diffrent menus
 GameObject* Menu;
@@ -63,13 +76,19 @@ void Game::initilize(const char* title, int xpos, int ypos, int width, int heigh
     }
 
 //inilize the diffrent obejets with there constructors
-   player = new Player("ProjectPNG/Police.png",0,0,32,32,4,100,25,4);
+   player = new Player("ProjectPNG/Police.png",32,32,0,0,2,100,25,4);
+   enemy = new Enemy("ProjectPNG/Demon.png",32,32,960/2,640/2,2,player);
+//weapons
+   disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 75.0f, 70, 5, 0.2, 20);
+   sword = new Sword("ProjectPNG/katanna.png", 32, 32, player, 1, 1, 0, 0);
+   // map and input inilize
    map = new Map();
-   enemy = new Enemy("ProjectPNG/Demon.png",960/2,640/2,32,32,9,player);
-
    Input = new KeyboardInput();
 
-   //menu
+//collison inlized
+    collison=new Collison();
+    
+//menu
    Menu=new GameObject("ProjectPNG/Menu.png",0,0,640,960,1);
    HelpMenu=new GameObject("ProjectPNG/HelpMenu.png",0,0,640,960,1);
    SettingsMenu=new GameObject("ProjectPNG/SettingsMenu.png",0,0,640,960,1);
@@ -90,7 +109,7 @@ void Game::handleEvents()
         break;
     }
 //handels keyboardInputs and what they do
-    Input->KeyInputDetedctor(player);
+    Input->KeyInputDetedctor(player,enemy);
 
 }
 
@@ -99,6 +118,11 @@ void Game::update()
     if(Input->inGame==1){
         //in game view
         player->Update();
+
+        disk->Update(0.1f);
+        sword->Update();
+
+        enemy->FollowPlayer(player);
         enemy->Update();    
         
     }else if(Input->inMenu==1){
@@ -114,10 +138,12 @@ void Game::update()
         HelpMenu->Update();
 
     }
+
+    bool beenHit=collison->enemyHitByDisk(enemy,disk,16,32);
     cnt++;
 
 
-    std::cout<<Input->inGame<<std::endl;
+    std::cout<<beenHit<<std::endl;
 
 
 }
@@ -132,6 +158,10 @@ void Game::render()
         //in game view
         map->DrawMap();
         player->Render();
+
+        disk->Render();
+        sword->Render();
+
         enemy->Render();
 
         
@@ -161,6 +191,38 @@ void Game::clean()
     SDL_Quit();
 
     std::cout << "Game Cleaned"<<std::endl;
+}
+
+void Game::update()
+{
+    if (Input->inGame == 1) {
+        player->Update();
+        disk->Update(0.1f);
+        sword->Update();
+        enemy->FollowPlayer(player);
+        enemy->Update();    
+
+        // Check for collision
+        collison->handlePlayerCollision(enemy, player, 16); // Assuming 16 is the attack radius
+    } 
+
+}
+
+void Game::render()
+{
+    SDL_RenderClear(renderer);
+    
+    if (Input->inGame == 1) {
+        map->DrawMap();
+        player->Render();
+        disk->Render();
+        sword->Render();
+        enemy->Render();
+        
+        std::cout << "Player Health: " << player->getHealth() << std::endl; // For console output
+    } 
+
+    SDL_RenderPresent(renderer);
 }
 
 
