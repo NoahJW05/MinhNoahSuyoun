@@ -56,13 +56,13 @@
         //inilizes sdl and creates both the window and renderer
         if(SDL_Init(SDL_INIT_EVERYTHING)==0)
         {
-            std::cout<<"Subsystems Initlized"<<std::endl;
+            //std::cout<<"Subsystems Initlized"<<std::endl;
 
                 //Creates window
                 window = SDL_CreateWindow(title, xpos, ypos, width, height,flags);
                 if(window)
                 {
-                    std::cout<<"Window Created"<<std::endl;
+                    //std::cout<<"Window Created"<<std::endl;
                 }
 
                 //Creates renderer
@@ -70,7 +70,7 @@
                 if(renderer)
                 {
                 SDL_SetRenderDrawColor(renderer,0,0,0,255);
-                std::cout << "Renderer Created" << std::endl;
+                //std::cout << "Renderer Created" << std::endl;
                 }
 
             
@@ -172,11 +172,12 @@ void Game::handleEvents()
         if (collison->beenHit(enemy, player, 16, 32))
         {
             player->reduceHealth(enemy->EDamage);
-            std::cout << "Player hit by enemy! Reducing health..." << std::endl;
+            //print out the player's health each time it has been hit 
+            std::cout << "Player's current health: " << player->getHealth() << std::endl;
 
             if (player->getHealth() <= 0)
             {
-                std::cout << "Player has died. Returning to menu..." << std::endl;
+                //std::cout << "Player has died. Returning to menu..." << std::endl;
                 Input->inGame = 0;
                 Input->inMenu = 1;
                 player->health = 100;
@@ -203,7 +204,7 @@ void Game::handleEvents()
     }
 
     cnt++;
-    std::cout << cnt << std::endl;
+    //std::cout << cnt << std::endl;
 }
 
     void Game::render()
@@ -265,7 +266,7 @@ void Game::handleEvents()
         SDL_Quit();
         
 
-        std::cout << "Game Cleaned"<<std::endl;
+        //std::cout << "Game Cleaned"<<std::endl;
     }
 
 
