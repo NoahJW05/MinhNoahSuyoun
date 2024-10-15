@@ -15,10 +15,10 @@
     Player* player;
     Enemy* enemy;
     Projectile* projectile;
-    Sword* sword;
     Map* map;
     Disk* disk;
     Disk* disk2;
+    Sword* sword;
     KeyboardInput* Input;
     Gun* gun;
 
@@ -79,11 +79,10 @@
     map = new Map();
 
     //weapon
+    sword = new Sword("ProjectPNG/katanna.png",32,32,player, 1,10,0);
     disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 75.0, 70, 5,0.2,20); 
-    disk2 = new Disk("ProjectPNG/disk2.png", 32, 32, player, 90.0, 70, 5,0.4,20);   
-    sword = new Sword("ProjectPNG/katanna.png", 32,32, player,2,1 ,0);   
-    gun = new Gun(player, "ProjectPNG/bullet.png", 32, 32, 2, 1, 6); // Customize parameters as needed 
-
+    disk2 = new Disk("ProjectPNG/disk2.png", 32, 32, player, 90.0, 70, 5,0.4,20);    
+    gun = new Gun(player, "ProjectPNG/bullet2.png", 32, 32, 2, 1, 6);
     Input = new KeyboardInput();
 
     //menu
@@ -125,9 +124,9 @@
             }else if (elapsedTime > level1 && elapsedTime <= level2){
                 disk2->Update(0.1f);
             }
-            gun->Shoot(0);
+            sword->Update();
+            gun->Shoot(90);
             gun->Update();
-            sword ->Update();
             enemy->FollowPlayer(player);
             enemy->Update();    
             
@@ -164,13 +163,13 @@
             player->Render();
             //projectile->Render();
             gun->Render();
+            sword->Render();
 
             if (elapsedTime <=level1){
                 disk -> Render();
             } else if (elapsedTime > level1 && elapsedTime <=level2){
                 disk2 -> Render();
-            }
-            sword-> Render();        
+            }       
             enemy->Render();
 
             
