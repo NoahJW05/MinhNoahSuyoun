@@ -1,23 +1,21 @@
 #include "Projectile.hpp"
+
 #include <cmath>
 Projectile::Projectile(const char* texturesheet, Player* player, int IMHeight, int IMWidth, int scale, int speed, int angle)
-    : GameObject(texturesheet, player->getX(), player->getY(), IMHeight, IMWidth, scale), speed(speed), angle(angle) {
-    velocity = 1;
-    xpos = player->getX();  // Get initial X position directly from player
-    ypos = player->getY();  // Get initial Y position directly from player
-}
+    : GameObject(texturesheet, IMHeight, IMWidth, player->fxpos, player->fypos, scale)
+    ,angle(angle), speed(speed), player(player){}
 Projectile::~Projectile(){}
 
 void Projectile::Update(){
-
-    GameObject::Update();
+ 
+    GameObject::fUpdate();
     MoveProjectile(angle);
 }
 
 void Projectile:: MoveProjectile(int angle){
     double radians = angle * M_PI / 180.0; 
-    xpos += speed*std::cos(radians); //moving in x-direction
-    ypos+= speed*std::sin(radians); //moving in y-direction
+    fxpos += speed*std::cos(radians); //moving in x-direction
+    fypos+= speed*std::sin(radians); //moving in y-direction
 }
 
 

@@ -15,8 +15,13 @@ class Game {
     SDL_Window *window;
 
    //timer to track elapsed time
-   Uint32 timer; 
-   Uint32 elapsedTime;
+    Uint32 timer; 
+    Uint32 elapsedTime;
+    int level1= 15;
+    int level2=30;
+    int level3=45;
+
+    int weaponChoice;
 
  public:
     Game();

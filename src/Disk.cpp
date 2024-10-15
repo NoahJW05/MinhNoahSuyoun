@@ -1,12 +1,10 @@
 #include "Disk.hpp"
-#include <cmath> // for sin, cos
+#include <cmath>
 
-// Constructor
 Disk::Disk(const char* texturesheet, int IMHeight, int IMWidth, Player* player, float radius, float initialAngle, int scale, float speed, int damage)
-    : GameObject(texturesheet, IMHeight, IMWidth, player->fxpos + radius * cosf(initialAngle), player->fypos + radius * sinf(initialAngle), scale),
+    : GameObject(texturesheet, IMHeight, IMWidth, player->fxpos , player->fypos, scale),
       radius(radius), angle(initialAngle), speed(speed), player(player) { }
 
-// Update the position of the disk to move it in a circular path around the player
 void Disk::Update(float deltaTime) {
     angle += speed * deltaTime;
 
@@ -16,8 +14,8 @@ void Disk::Update(float deltaTime) {
     }
 
     // Calculate the disk's new position based on the player's position and the current angle
-    fxpos = player->fxpos + radius * cosf(angle)-110;  // X position relative to the player
-    fypos = player->fypos + radius * sinf(angle)-70;  // Y position relative to the player
+    fxpos = player->fxpos + radius * cos(angle)-64;  // x position
+    fypos = player->fypos + radius * sin(angle)-34;  // y position 
 
     GameObject::fUpdate();
 }
