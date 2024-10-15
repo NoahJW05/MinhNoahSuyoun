@@ -12,16 +12,21 @@ float attackDistance;
 float deltaX;
 float deltaY;
 
+//calculate the differences in x and y pos
 deltaX = player->fxpos-enemy->fxpos;
 deltaY = player->fypos-enemy->fypos;
 
+
+//distance formula
 distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+
 attackDistance=ARadius+DRadius;
 
+//collision occurs only when distance is less than attack distance 
 if(distance<attackDistance)
 {
     return true;
-}else if(distance>attackDistance){
+}else if(distance>attackDistance){ //if distance is greater than attack distance, collision not occur
     return false;
 }
 

@@ -17,8 +17,9 @@ class Game {
    //timer to track elapsed time
     Uint32 timer; 
     Uint32 elapsedTime;
-    int level1= 10;
-    int level2=20;
+    //set levels of game, can be adjusted
+    int level1= 20;
+    int level2=30;
     
     int currentWeapon; //disk=1, gun=2, sword=3
 
@@ -42,4 +43,4 @@ class Game {
 
 };
 
-#endif /*Game_hpp*/
+#endif 

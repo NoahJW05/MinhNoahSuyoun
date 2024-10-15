@@ -8,12 +8,12 @@ Disk::Disk(const char* texturesheet, int IMHeight, int IMWidth, Player* player, 
 void Disk::Update(float deltaTime) {
     angle += speed * deltaTime;
 
-    // Keep the angle within the range 0 to 2 * pi
+    // angle within  0 to 2 * pi
     if (angle > 2 * M_PI) {
         angle -= 2 * M_PI;
     }
 
-    // Calculate the disk's new position based on the player's position and the current angle
+    // calc disk pos based on player pos and angle
     fxpos = player->fxpos + radius * cos(angle)-64;  // x position
     fypos = player->fypos + radius * sin(angle)-34;  // y position 
 

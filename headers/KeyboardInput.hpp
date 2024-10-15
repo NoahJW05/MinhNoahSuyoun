@@ -12,7 +12,7 @@ class KeyboardInput
     int count;
     public:
         KeyboardInput();
-        void KeyInputDetedctor(Player* player, Enemy* enemy);
+        void KeyInputDetedctor(Player* player);
         int weaponChoice; 
         
 

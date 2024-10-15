@@ -9,12 +9,13 @@ KeyboardInput::KeyboardInput()
     count=0;
 }
 
-void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
+void KeyboardInput::KeyInputDetedctor(Player* player)
 {
     count++;
-    //input to choose weapon type
+    
     const Uint8* state = SDL_GetKeyboardState(NULL);
     
+    //input to choose weapon type 
     if (state[SDL_SCANCODE_1]) {
         weaponChoice = 1;          
     }
@@ -27,28 +28,27 @@ void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
     
     //Game cotrols for player only works if menu isnt open
     if(inGame==true){
-       
+        
         if(state[SDL_SCANCODE_W])
         {
             player->MovePlayer(90);
-            enemy->FollowPlayer(player);
+            
         }
         if(state[SDL_SCANCODE_S])
         {
             player->MovePlayer(270);
-            enemy->FollowPlayer(player);
+            
         }
         if(state[SDL_SCANCODE_A])
         {
             player->MovePlayer(180);
-            enemy->FollowPlayer(player);
+            
         }
         if(state[SDL_SCANCODE_D])
         {
             player->MovePlayer(0);
-            enemy->FollowPlayer(player);
+            
         }
-        
         if(count % 10 ==0){
         if(state[SDL_SCANCODE_ESCAPE]){
             inGame=0;
@@ -106,4 +106,3 @@ void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
 
 
 }
-    

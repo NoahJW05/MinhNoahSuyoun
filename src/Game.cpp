@@ -10,14 +10,15 @@
     #include "Disk.hpp"
     #include "Sword.hpp"
     #include "Collison.hpp"
+    #include "EnemyManager.hpp"
 
 
     //inilize diffrent game objects with there type an a pointer
     Player* player;
-    Enemy* enemy;
     Map* map;
     KeyboardInput* Input;
     Collison* collison;
+    EnemyManager* enemyManager; // Max 50 enemies, spawn every 2 seconds
 
     //weapons
     Disk* disk;
@@ -83,7 +84,7 @@
     //inilize the diffrent obejets with there constructors
 
     player = new Player("ProjectPNG/Pig.png", 32, 32, 0, 0, 2, 100, 25, 4, 1);
-    enemy = new Enemy("ProjectPNG/Demon.png",32,32,960/2,640/2,4,player);
+    enemyManager=new EnemyManager(50, 2000,player);
     map = new Map();
 
 //weapons
@@ -124,7 +125,7 @@ void Game::handleEvents()
     }
 
     // Handles keyboard inputs and what they do
-    Input->KeyInputDetedctor(player, enemy);
+    Input->KeyInputDetedctor(player);
 }
 
 
@@ -135,6 +136,7 @@ void Game::handleEvents()
     if (Input->inGame == 1) {
         // In game view
         player->Update();
+        enemyManager->Update(player);
 
         // Update the selected weapon
         if (Input -> weaponChoice == 1) { 
@@ -167,31 +169,6 @@ void Game::handleEvents()
             }
         }
 
-        enemy->FollowPlayer(player);
-        enemy->Update();
-        if (collison->beenHit(enemy, player, 16, 32))
-        {
-            player->reduceHealth(enemy->EDamage);
-            //print out the player's health each time it has been hit 
-            std::cout << "Player's current health: " << player->getHealth() << std::endl;
-
-            if (player->getHealth() <= 0)
-            {
-                //std::cout << "Player has died. Returning to menu..." << std::endl;
-                Input->inGame = 0;
-                Input->inMenu = 1;
-                player->health = 100;
-                player->fxpos=0;
-                player->fypos=0;
-                enemy->EDamage=10;
-                enemy->fxpos=480;
-                enemy->fypos=320;
-            
-
-            }
-        }
-        bool beenHit = collison->enemyHitByDisk(enemy, disk, 16, 32);
-        //std::cout << beenHit << std::endl;
     } else if (Input->inMenu == 1) {
         // In menu view
         Menu->Update();
@@ -215,6 +192,7 @@ void Game::handleEvents()
         // In game view
         map->DrawMap();  // Render the map
         player->Render();  // Render the player
+        enemyManager->Render();
 
         // Render the currently selected weapon based on currentWeapon value
         if (Input ->weaponChoice == 1) {  // Disk
@@ -243,8 +221,6 @@ void Game::handleEvents()
             }
         }
 
-        // Render the enemy after the weapon
-        enemy->Render();
     } else if (Input->inMenu == 1) {
         // In menu view
         Menu->Render();
@@ -268,5 +244,4 @@ void Game::handleEvents()
 
         //std::cout << "Game Cleaned"<<std::endl;
     }
-
 

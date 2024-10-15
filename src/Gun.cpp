@@ -6,7 +6,7 @@ Gun::Gun(Player* player, const char* projectileTexture, int projIMHeight, int pr
       projScale(projScale), projSpeed(projSpeed), reloadTime(reloadTime) {
         lastShotTime =- reloadTime;
       }
-//deconstructor
+
 Gun::~Gun() {
     for (auto projectile : projectiles) {
         delete projectile;

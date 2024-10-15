@@ -22,4 +22,4 @@ bool enemyHitByDisk(Enemy* enemy,Disk* disk,float ARadius,float DRadius);
 
 };
 
-#endif //COLLISON_HPP
+#endif

@@ -13,9 +13,10 @@ void Projectile::Update(){
 }
 
 void Projectile:: MoveProjectile(int angle){
+    //angle in radians, set angle, projectile will move in this set angle
     double radians = angle * M_PI / 180.0; 
-    fxpos += speed*std::cos(radians); //moving in x-direction
-    fypos+= speed*std::sin(radians); //moving in y-direction
+    fxpos += speed*std::cos(radians); 
+    fypos+= speed*std::sin(radians); 
 }
 
 
