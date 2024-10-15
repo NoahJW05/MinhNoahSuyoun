@@ -93,9 +93,9 @@
     sword2 = new Sword("ProjectPNG/sword2.png",32,32,player, 1,10,0);
     sword3 = new Sword("ProjectPNG/sword3.png",32,32,player, 1,20,0);
     //disk
-    disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 75.0, 70, 5,0.2,20); 
-    disk2 = new Disk("ProjectPNG/disk2.png", 32, 32, player, 90.0, 70, 5,0.4,20);  
-    disk3 = new Disk("ProjectPNG/disk3.png", 32, 32, player, 90.0, 70, 5,0.4,20);
+    disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 75.0, 70, 5,0.2,5); 
+    disk2 = new Disk("ProjectPNG/disk2.png", 32, 32, player, 90.0, 70, 5,0.4,7);  
+    disk3 = new Disk("ProjectPNG/disk3.png", 32, 32, player, 120.0, 70, 5,0.6,10);
     //gun
     gun = new Gun(player, "ProjectPNG/bullet.png", 32, 32, 2, 1, 1000);
     gun2 = new Gun(player, "ProjectPNG/bullet2.png", 32, 32, 2, 1, 700);
@@ -168,7 +168,20 @@ void Game::handleEvents()
                 sword3->Update();
             }
         }
-
+        // Check for collisions with enemies
+        for (auto enemy : enemyManager->getEnemies()) {            
+            if (collison->beenHit(enemy, player, 32 , 16)) {
+                // Call reduceHealth if there's a collision
+                player->reduceHealth(10); // Assuming 10 is the damage dealt
+                std::cout << "Player health: " << player->getHealth() << std::endl;
+                if (player->getHealth()<=0){
+                  std::cout<<"Player has died. Returnig to menu"<<std::endl;
+                  Input -> inGame = 0;
+                  Input -> inMenu = 1;
+                  player -> health = 100;
+                }
+            }
+        }
     } else if (Input->inMenu == 1) {
         // In menu view
         Menu->Update();
