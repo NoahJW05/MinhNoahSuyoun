@@ -17,7 +17,7 @@ class Game {
    //timer to track elapsed time
     Uint32 timer; 
     Uint32 elapsedTime;
-    int level1=25;
+    int level1= 25;
     int level2=50;
     int level3=150;
 

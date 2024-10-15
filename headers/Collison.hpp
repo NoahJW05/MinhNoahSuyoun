@@ -4,6 +4,9 @@
 #include "Game.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Disk.hpp"
+#include "Sword.hpp"
+
 
 class Collison
 {
@@ -15,7 +18,8 @@ Collison();
 //beenHit(what is attacking,what is been hit,attacker hit box radius,enemy/victim hitbox radius);
 
 bool beenHit(Enemy* enemy,Player* player,float ARadius,float DRadius);
-
+bool enemyHitByDisk(Enemy* enemy,Disk* disk,float ARadius,float DRadius);
+bool enemyHitBySword(Enemy* enemy, Sword* sword, float ARadius, float DRadius);
 
 };
 
