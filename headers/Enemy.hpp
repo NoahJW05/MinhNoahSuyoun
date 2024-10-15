@@ -18,15 +18,15 @@ class Enemy : public GameObject {
     float angle;
 
  public:
-     int EHealth=50;
-    int EDamage=10;
     Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, Player* player);
     void SpawnEnemyRandomly();
-
+    int EHealth=50;
+    int EDamage=10;
     void FollowPlayer(Player* player);
 
     void Update();
     void Render();
+    
 };
 
 

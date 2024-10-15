@@ -12,6 +12,7 @@ class Game {
    int cnt=0;
     bool isRunning;
     SDL_Window *window;
+
  public:
     Game();
     ~Game();
