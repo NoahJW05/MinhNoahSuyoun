@@ -6,6 +6,8 @@
 #include "Enemy.hpp"
 #include "Disk.hpp"
 #include "Sword.hpp"
+#include "EnemyManager.hpp"
+#include "Gun.hpp"
 
 
 class Collison
@@ -16,9 +18,11 @@ public:
 Collison();
 //how the function works
 //beenHit(what is attacking,what is been hit,attacker hit box radius,enemy/victim hitbox radius);
-
 bool beenHit(Enemy* enemy,Player* player,float ARadius,float DRadius);
 bool enemyHitByDisk(Enemy* enemy,Disk* disk,float ARadius,float DRadius);
+bool enemyHitBySword(Enemy* enemy, Sword* sword, float ARadius, float DRadius);
+bool enemyHitByGun(Enemy* enemy, Gun* gun, float ARadius, float DRadius);
+
 
 };
 

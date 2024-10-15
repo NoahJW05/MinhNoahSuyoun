@@ -2,7 +2,7 @@
 #include <cmath>
 
 Sword::Sword(const char* texturesheet, int IMHeight, int IMWidth, Player* player,int scale,int damage,  float angle)
-        : GameObject(texturesheet, IMHeight, IMWidth, player->fxpos, player->fypos, scale), // Initialize with player's position
+        : GameObject(texturesheet, IMHeight, IMWidth,player->fxpos, player->fypos, scale), // Initialize with player's position
           player(player), damage(damage), angle(angle) { }
 
     // Updates the sword position based on the player position

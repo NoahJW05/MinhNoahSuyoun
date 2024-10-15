@@ -1,17 +1,31 @@
 #ifndef GUN_HPP
 #define GUN_HPP
 
-#include <vector>
 #include "Projectile.hpp"
+#include <vector>
 
 class Gun {
 public:
-    void CreateProjectile(const char* texturesheet, float x, float y, int IMHeight, int IMWidth, int scale, int speed, int direction);
-    void UpdateProjectiles();
-    void RenderProjectiles();
+    Gun(Player* player, const char* projectileTexture, int projIMHeight, int projIMWidth, int projScale, int projSpeed, int reloadTime);
+    ~Gun();
 
-private:
-    std::vector<Projectile> projectiles;  // Store all active projectiles
+    void Shoot(int angle);  // Shoots a projectile at the given angle
+    void Update();          // Updates all projectiles
+    void Render();          // Renders all projectiles
+
+    std::vector<Projectile*>& getProjectiles() { return projectiles; }
+
+   private:
+    Player* player;
+    const char* projectileTexture;
+    int projIMHeight;
+    int projIMWidth;
+    int projScale;
+    int projSpeed;
+    int reloadTime;         // Time between shots in milliseconds
+    Uint32 lastShotTime;    // Time when the last shot was fired
+
+    std::vector<Projectile*> projectiles; // List of active projectiles
 };
 
 #endif

@@ -10,16 +10,22 @@ class Game {
  private:
    
    int cnt=0;
+   //determents if the game has run and if not stops it
     bool isRunning;
     SDL_Window *window;
+
+   //timer to track elapsed time
+    Uint32 timer; 
+    Uint32 elapsedTime;
+    int level1=25;
+    int level2=50;
+    int level3=150;
+   int weaponChoice;
 
  public:
     Game();
     ~Game();
     void initilize(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
-
-
-
     void handleEvents();
     void update();
     void render();
@@ -31,4 +37,4 @@ class Game {
 
 };
 
-#endif 
+#endif /*Game_hpp*/

@@ -34,6 +34,7 @@ void Player::Render()
     GameObject::Render();
 }
 void Player::reduceHealth(int damage) {
+    Uint32 lastTimeSinceAttack;
     Uint32 currentTime = SDL_GetTicks()/1000;
     if (currentTime-lastTimeSinceAttack>=coolDown){   
     health -= damage;

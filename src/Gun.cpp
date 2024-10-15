@@ -1,22 +1,44 @@
-// #include "Gun.hpp"
-// #include <algorithm>
+#include "Gun.hpp"
+#include "SDL2/SDL.h"
 
-// void Gun::CreateProjectile(const char* texturesheet, float x, float y, int IMHeight, int IMWidth, int scale, int speed, int direction) {
-//     projectiles.emplace_back(texturesheet, x, y, IMHeight, IMWidth, scale, speed, direction);
-// }
+Gun::Gun(Player* player, const char* projectileTexture, int projIMHeight, int projIMWidth, int projScale, int projSpeed, int reloadTime)
+    : player(player), projectileTexture(projectileTexture), projIMHeight(projIMHeight), projIMWidth(projIMWidth),
+      projScale(projScale), projSpeed(projSpeed), reloadTime(reloadTime) {
+        lastShotTime =- reloadTime;
+      }
+//deconstructor
+Gun::~Gun() {
+    for (auto projectile : projectiles) {
+        delete projectile;
+    }
+}
 
-// void Gun::UpdateProjectiles() {
-//     for (auto& projectile : projectiles) {
-//         projectile.Update();
-//     }
+void Gun::Shoot(int angle) {
+    // Check if enough time has passed since the last shot
+    Uint32 currentTime = SDL_GetTicks()/1000;
+    if (currentTime - lastShotTime >= reloadTime) {
+        Projectile* newProjectile = new Projectile(projectileTexture, player, projIMHeight, projIMWidth, projScale, projSpeed, angle);
+        //storing projectile object in vector
+        projectiles.push_back(newProjectile);
+        lastShotTime = currentTime;
+    }
+}
 
-//     // Remove inactive projectiles
-//     projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(),
-//         [](const Projectile& p) { return !p.isActive(); }), projectiles.end());
-// }
+void Gun::Update() {
+    for (auto it = projectiles.begin(); it != projectiles.end(); ) {
+        (*it)->Update();
+        if (!(*it)->isActive()) {
+            delete *it;
+            it = projectiles.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
 
-// void Gun::RenderProjectiles() {
-//     for (auto& projectile : projectiles) {
-//         projectile.Render();
-//     }
-// }
+void Gun::Render() {
+    // Render all active projectiles
+    for (auto projectile : projectiles) {
+        projectile->Render();
+    }
+}

@@ -4,7 +4,7 @@
 #include "Player.hpp"
 #include "GameObject.hpp"
 #include <cmath> 
-#include <cstdlib> 
+#include <cstdlib>  
 #include <ctime>   
 #include <math.h>
 
@@ -18,17 +18,16 @@ class Enemy : public GameObject {
     float angle;
 
  public:
+   int EHealth;
+   int EDamage;
     Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, Player* player);
     void SpawnEnemyRandomly();
-    int EHealth=50;
-    int EDamage=10;
+
     void FollowPlayer(Player* player);
 
     void Update();
     void Render();
-    
 };
 
 
 #endif
-
