@@ -15,7 +15,7 @@ Gun::~Gun() {
 
 void Gun::Shoot(int angle) {
     // Check if enough time has passed since the last shot
-    Uint32 currentTime = SDL_GetTicks()/1000;
+    Uint32 currentTime = SDL_GetTicks();
     if (currentTime - lastShotTime >= reloadTime) {
         Projectile* newProjectile = new Projectile(projectileTexture, player, projIMHeight, projIMWidth, projScale, projSpeed, angle);
         //storing projectile object in vector

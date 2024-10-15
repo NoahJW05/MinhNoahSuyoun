@@ -12,10 +12,25 @@ KeyboardInput::KeyboardInput()
 void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
 {
     count++;
+    //input to choose weapon type
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    
+    if (state[SDL_SCANCODE_1]) {
+        weaponChoice = 1;  // Select Disk
+        std::cout << "Weapon selected: Disk" << std::endl;
+    }
+    if (state[SDL_SCANCODE_2]) {
+        weaponChoice = 2;  // Select Gun
+        std::cout << "Weapon selected: Gun" << std::endl;
+    }
+    if (state[SDL_SCANCODE_3]) {
+        weaponChoice = 3;  // Select Sword
+        std::cout << "Weapon selected: Sword" << std::endl;
+    }
     
     //Game cotrols for player only works if menu isnt open
     if(inGame==true){
-        
+       
         if(state[SDL_SCANCODE_W])
         {
             player->MovePlayer(90);
@@ -36,6 +51,7 @@ void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
             player->MovePlayer(0);
             enemy->FollowPlayer(player);
         }
+        
         if(count % 10 ==0){
         if(state[SDL_SCANCODE_ESCAPE]){
             inGame=0;

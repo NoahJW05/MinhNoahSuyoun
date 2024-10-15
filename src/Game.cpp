@@ -14,13 +14,19 @@
     //inilize diffrent game objects with there type an a pointer
     Player* player;
     Enemy* enemy;
-    Projectile* projectile;
     Map* map;
+    KeyboardInput* Input;
+
+    //weapons
     Disk* disk;
     Disk* disk2;
+    Disk* disk3;
     Sword* sword;
-    KeyboardInput* Input;
+    Sword* sword2;
+    Sword* sword3;
     Gun* gun;
+    Gun* gun2;
+    Gun* gun3;
 
     //diffrent menus
     GameObject* Menu;
@@ -78,11 +84,20 @@
     enemy = new Enemy("ProjectPNG/Demon.png",32,32,960/2,640/2,4,player);
     map = new Map();
 
-    //weapon
-    sword = new Sword("ProjectPNG/katanna.png",32,32,player, 1,10,0);
+//weapons
+    //sword
+    sword = new Sword("ProjectPNG/katanna.png",32,32,player, 1,5,0);
+    sword2 = new Sword("ProjectPNG/sword2.png",32,32,player, 1,10,0);
+    sword3 = new Sword("ProjectPNG/sword3.png",32,32,player, 1,20,0);
+    //disk
     disk = new Disk("ProjectPNG/disk.png", 32, 32, player, 75.0, 70, 5,0.2,20); 
-    disk2 = new Disk("ProjectPNG/disk2.png", 32, 32, player, 90.0, 70, 5,0.4,20);    
-    gun = new Gun(player, "ProjectPNG/bullet2.png", 32, 32, 2, 1, 6);
+    disk2 = new Disk("ProjectPNG/disk2.png", 32, 32, player, 90.0, 70, 5,0.4,20);  
+    disk3 = new Disk("ProjectPNG/disk3.png", 32, 32, player, 90.0, 70, 5,0.4,20);
+    //gun
+    gun = new Gun(player, "ProjectPNG/bullet.png", 32, 32, 2, 1, 1000);
+    gun2 = new Gun(player, "ProjectPNG/bullet2.png", 32, 32, 2, 1, 700);
+    gun3 = new Gun(player, "ProjectPNG/bullet3.png", 32, 32, 2, 1, 300);
+
     Input = new KeyboardInput();
 
     //menu
@@ -91,106 +106,134 @@
     SettingsMenu=new GameObject("ProjectPNG/SettingsMenu.png",0,0,640,960,1);
     }
 
-    void Game::handleEvents()
+void Game::handleEvents()
+{
+    // Exits the window
+    SDL_Event event;
+    SDL_PollEvent(&event);
+    switch (event.type)
     {
-        //exits the window
-        SDL_Event event;
-        SDL_PollEvent(&event);
-        switch (event.type)
-        {
-        case SDL_QUIT:
-            isRunning = false;
-            break;
-        
-        default:
-            break;
-        }
-    //handels keyboardInputs and what they do
-        Input->KeyInputDetedctor(player,enemy);
+    case SDL_QUIT:
+        isRunning = false;
+        break;
 
+    default:
+        break;
     }
 
-    void Game::update()
-    {
-        elapsedTime = (SDL_GetTicks() - timer)/1000;
-        std::cout << "Time passed: " << elapsedTime << " s" << std::endl;
+    // Handles keyboard inputs and what they do
+    Input->KeyInputDetedctor(player, enemy);
+}
 
-        if(Input->inGame==1){
-            //in game view
-            player->Update();
-            //projectile-> Update(); 
-            if (elapsedTime <= level1){
-                disk->Update(0.1f);
-            }else if (elapsedTime > level1 && elapsedTime <= level2){
-                disk2->Update(0.1f);
+
+ void Game::update()
+{
+    elapsedTime = (SDL_GetTicks() - timer) / 1000;
+    std::cout << "Time passed: " << elapsedTime << " s" << std::endl;
+
+    if (Input->inGame == 1) {
+        // In game view
+        player->Update();
+
+        // Update the selected weapon
+        if (Input -> weaponChoice == 1) { 
+            //Disk
+            if (elapsedTime <= level1) {
+                disk->Update(0.1);
+            } else if (elapsedTime > level1 && elapsedTime <= level2) {
+                disk2->Update(0.1);
+            }else if (elapsedTime>level2){
+                disk3->Update(0.1);
             }
-            sword->Update();
-            gun->Shoot(90);
-            gun->Update();
-            enemy->FollowPlayer(player);
-            enemy->Update();    
-            
-        }else if(Input->inMenu==1){
-            //in menu view
-            Menu->Update();
-
-        }else if(Input->inSettings==1){
-            //settings menu
-            SettingsMenu->Update();
-
-        }else if(Input->inHelpMenu==1){
-            //help menu
-            HelpMenu->Update();
-
+        } else if (Input->weaponChoice == 2) { 
+         if(elapsedTime<=level1){
+                gun->Shoot(45);
+                gun->Update();
+            }else if (elapsedTime>level1 && elapsedTime<=level2){
+                gun2->Shoot(45);
+                gun2->Update();
+            } else if (elapsedTime>level2){
+                gun3->Shoot(45);
+                gun3->Update();
+            }
+        } else if (Input->weaponChoice == 3) { // Sword
+            if (elapsedTime <= level1) {
+                sword->Update();
+            } else if (elapsedTime > level1 && elapsedTime <= level2) {
+                sword2->Update();
+            }else if (elapsedTime>level2){
+                sword3->Update();
+            }
         }
-        cnt++;
 
-
-        std::cout<<cnt<<std::endl;
-
-
+        enemy->FollowPlayer(player);
+        enemy->Update();
+    } else if (Input->inMenu == 1) {
+        // In menu view
+        Menu->Update();
+    } else if (Input->inSettings == 1) {
+        // Settings menu
+        SettingsMenu->Update();
+    } else if (Input->inHelpMenu == 1) {
+        // Help menu
+        HelpMenu->Update();
     }
+
+    cnt++;
+    std::cout << cnt << std::endl;
+}
 
     void Game::render()
-    {
-        SDL_RenderClear(renderer);
-        //where stuff whould be placed to renderer/controls which menu 
-        //state the games in menu or game
+{
+    SDL_RenderClear(renderer);  // Clear the window
 
-        if(Input->inGame==1){
-            //in game view
-            map->DrawMap();
-            player->Render();
-            //projectile->Render();
-            gun->Render();
-            sword->Render();
+    if (Input->inGame == 1) {
+        // In game view
+        map->DrawMap();  // Render the map
+        player->Render();  // Render the player
 
-            if (elapsedTime <=level1){
-                disk -> Render();
-            } else if (elapsedTime > level1 && elapsedTime <=level2){
-                disk2 -> Render();
-            }       
-            enemy->Render();
-
-            
-        }else if(Input->inMenu==1){
-            //in menu view
-            Menu->Render();
-
-        }else if(Input->inSettings==1){
-            //settings menu
-            SettingsMenu->Render();
-
-        }else if(Input->inHelpMenu==1){
-            //help menu
-            HelpMenu->Render();
-
+        // Render the currently selected weapon based on currentWeapon value
+        if (Input ->weaponChoice == 1) {  // Disk
+            if (elapsedTime <= level1) {
+                disk->Render();
+            } else if (elapsedTime > level1 && elapsedTime <= level2) {
+                disk2->Render();
+            } else if (elapsedTime > level2){
+                disk3-> Render();
+            }
+        } else if (Input ->weaponChoice == 2) { 
+            if (elapsedTime<=level1){
+                gun->Render();
+            } else if (elapsedTime>level1 && elapsedTime<=level2){
+                gun2->Render();
+            } else if (elapsedTime>level2){
+                gun3 ->Render();
+            }
+        } else if (Input->weaponChoice == 3) {  
+            if (elapsedTime<=level1){
+                sword->Render();
+            } else if (elapsedTime>level1 && elapsedTime<=level2){
+                sword2->Render();
+            } else if (elapsedTime>level2){
+                sword3 ->Render();
+            }
         }
 
-
-
-        SDL_RenderPresent(renderer);
+        // Render the enemy after the weapon
+        enemy->Render();
+    } else if (Input->inMenu == 1) {
+        // In menu view
+        Menu->Render();
+    } else if (Input->inSettings == 1) {
+        // Settings menu
+        SettingsMenu->Render();
+    } else if (Input->inHelpMenu == 1) {
+        // Help menu
+        HelpMenu->Render();
     }
+
+    SDL_RenderPresent(renderer);  // Present everything to the screen
+}
 
     void Game::clean()
     {    
@@ -201,6 +244,5 @@
 
         std::cout << "Game Cleaned"<<std::endl;
     }
-
 
 

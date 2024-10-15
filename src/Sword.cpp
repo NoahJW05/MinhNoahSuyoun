@@ -16,3 +16,4 @@ void Sword:: Update(){
 void Sword:: Render(){
         GameObject::Render();
 }
+

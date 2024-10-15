@@ -17,11 +17,10 @@ class Game {
    //timer to track elapsed time
     Uint32 timer; 
     Uint32 elapsedTime;
-    int level1= 25;
-    int level2=50;
-    int level3=150;
-
-    int weaponChoice;
+    int level1= 10;
+    int level2=20;
+    
+    int currentWeapon; //disk=1, gun=2, sword=3
 
  public:
     Game();
@@ -34,6 +33,8 @@ class Game {
     void update();
     void render();
     void clean();
+    void selectWeapon(); 
+    int getSelectedWeapon();
    
    static SDL_Renderer *renderer;
 
