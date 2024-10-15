@@ -4,14 +4,13 @@
 #include "Player.hpp"
 #include "GameObject.hpp"
 #include <cmath> 
-#include <cstdlib>  
+#include <cstdlib> 
 #include <ctime>   
 #include <math.h>
 
 class Enemy : public GameObject {
  protected:
-    int EHealth;
-    int EDamage;
+
     int Evelocity;
     bool isAlive;
     Player* player;
@@ -21,11 +20,13 @@ class Enemy : public GameObject {
  public:
     Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, Player* player);
     void SpawnEnemyRandomly();
-
+    int EHealth=50;
+    int EDamage=10;
     void FollowPlayer(Player* player);
 
     void Update();
     void Render();
+    
 };
 
 

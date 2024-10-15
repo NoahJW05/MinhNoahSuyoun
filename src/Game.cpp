@@ -9,6 +9,7 @@
     #include "Gun.hpp"
     #include "Disk.hpp"
     #include "Sword.hpp"
+    #include "Collison.hpp"
 
 
     //inilize diffrent game objects with there type an a pointer
@@ -16,6 +17,7 @@
     Enemy* enemy;
     Map* map;
     KeyboardInput* Input;
+    Collison* collison;
 
     //weapons
     Disk* disk;
@@ -77,10 +79,10 @@
         {
             isRunning = false;
         }
-
+    std::cout << "Press 1 for Disk, 2 for Gun, and 3 for Sword" << std::endl;
     //inilize the diffrent obejets with there constructors
 
-    player = new Player("ProjectPNG/Pig.png",32,32,0,0,2,100,25,4);
+    player = new Player("ProjectPNG/Pig.png", 32, 32, 0, 0, 2, 100, 25, 4, 1);
     enemy = new Enemy("ProjectPNG/Demon.png",32,32,960/2,640/2,4,player);
     map = new Map();
 
@@ -129,7 +131,6 @@ void Game::handleEvents()
  void Game::update()
 {
     elapsedTime = (SDL_GetTicks() - timer) / 1000;
-    std::cout << "Time passed: " << elapsedTime << " s" << std::endl;
 
     if (Input->inGame == 1) {
         // In game view
@@ -168,6 +169,28 @@ void Game::handleEvents()
 
         enemy->FollowPlayer(player);
         enemy->Update();
+        if (collison->beenHit(enemy, player, 16, 32))
+        {
+            player->reduceHealth(enemy->EDamage);
+            std::cout << "Player hit by enemy! Reducing health..." << std::endl;
+
+            if (player->getHealth() <= 0)
+            {
+                std::cout << "Player has died. Returning to menu..." << std::endl;
+                Input->inGame = 0;
+                Input->inMenu = 1;
+                player->health = 100;
+                player->fxpos=0;
+                player->fypos=0;
+                enemy->EDamage=10;
+                enemy->fxpos=480;
+                enemy->fypos=320;
+            
+
+            }
+        }
+        bool beenHit = collison->enemyHitByDisk(enemy, disk, 16, 32);
+        //std::cout << beenHit << std::endl;
     } else if (Input->inMenu == 1) {
         // In menu view
         Menu->Update();

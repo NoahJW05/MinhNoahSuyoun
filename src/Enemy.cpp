@@ -7,7 +7,7 @@ Enemy::Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, floa
 {
     this->player = player;
     isAlive = true;
-    speed = 0.5; 
+    speed = 0.5;
     angle=90*(M_PI/180);
 }
 
