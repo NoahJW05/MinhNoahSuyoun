@@ -1,7 +1,7 @@
 #ifndef GUN_HPP
 #define GUN_HPP
 
-#include <vector>
+
 #include "Projectile.hpp"
 
 class Gun {

@@ -8,23 +8,28 @@
 class Player : public GameObject
 {
 protected:
-    int health;
-    int damage;
+
     int velocity;
     int speed;
     
     int angle;
+    int coolDown;
+    Uint32 lastTimeSinceAttack;
 
 public:
-    void reduceHealth(int amount);
-    int getHealth() const{return health; }
-    bool inAlive() const{return health > 0;}
-    Player(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, int health, int damage, int velocity);
+    int health=100;
+    int damage=20;
+    Player(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, int health, int damage, int velocity, int coolDown);
+
     void MovePlayer(int angle);
     void Update();
     void Render();
     int getX() const { return xpos; }
     int getY() const { return ypos; }
+    void reduceHealth(int damage); 
+    int getHealth();
+
+
 };
 
 #endif

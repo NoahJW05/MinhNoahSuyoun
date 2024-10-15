@@ -10,8 +10,7 @@
 
 class Enemy : public GameObject {
  protected:
-    int EHealth;
-    int EDamage;
+
     int Evelocity;
     bool isAlive;
     Player* player;
@@ -19,6 +18,8 @@ class Enemy : public GameObject {
     float angle;
 
  public:
+     int EHealth=50;
+    int EDamage=10;
     Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, Player* player);
     void SpawnEnemyRandomly();
 
