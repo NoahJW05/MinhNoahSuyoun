@@ -9,7 +9,7 @@ KeyboardInput::KeyboardInput()
     count=0;
 }
 
-void KeyboardInput::KeyInputDetedctor(Player* player,Enemy* enemy)
+void KeyboardInput::KeyInputDetedctor(Player* player)
 {
     count++;
     

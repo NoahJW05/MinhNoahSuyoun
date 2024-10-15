@@ -10,11 +10,13 @@
     #include "Disk.hpp"
     #include "Sword.hpp"
     #include "Collison.hpp"
-
+    #include "EnemyManager.hpp"
 
     //inilize diffrent game objects with there type an a pointer
     Player* player;
-    Enemy* enemy;
+
+    EnemyManager* enemyManager; // Max 50 enemies, spawn every 2 seconds
+
     Projectile* projectile;
     Map* map;
     Disk* disk;
@@ -78,7 +80,7 @@
     //inilize the diffrent obejets with there constructors
 
     player = new Player("ProjectPNG/Pig.png",32,32,0,0,2,100,25,4);
-    enemy = new Enemy("ProjectPNG/Demon.png",32,32,960/2,640/2,2,player);
+    enemyManager=new EnemyManager(50, 2000,player);
     map = new Map();
 
     //collison
@@ -112,7 +114,7 @@
             break;
         }
     //handels keyboardInputs and what they do
-        Input->KeyInputDetedctor(player,enemy);
+        Input->KeyInputDetedctor(player);
 
     }
 
@@ -124,6 +126,7 @@
         if(Input->inGame==1){
             //in game view
             player->Update();
+            enemyManager->Update(player);
             //projectile-> Update(); 
             if (elapsedTime <= level1){
                 disk->Update(0.1f);
@@ -133,8 +136,9 @@
             sword->Update();
             gun->Shoot(90);
             gun->Update();
-            enemy->FollowPlayer(player);
-            enemy->Update();    
+            
+
+             
             
         }else if(Input->inMenu==1){
             //in menu view
@@ -151,8 +155,8 @@
         }
         cnt++;
 
-    bool beenHit=collison->enemyHitBySword(enemy,sword,96,64);
-        std::cout<<beenHit<<std::endl;
+ 
+        //std::cout<<beenHit<<std::endl;
 
 
     }
@@ -167,6 +171,7 @@
             //in game view
             map->DrawMap();
             player->Render();
+            enemyManager->Render();
             //projectile->Render();
             gun->Render();
             sword->Render();
@@ -175,10 +180,21 @@
                 disk -> Render();
             } else if (elapsedTime > level1 && elapsedTime <=level2){
                 disk2 -> Render();
-            }       
-            enemy->Render();
+            }
 
+            for (auto enemy : enemyManager->getEnemies()) {
+              bool beenHit = collison->beenHit(enemy, player, 32,16);  // Check if the player is hit by an enemy
+             
+                std::cout << beenHit << std::endl;
+              
+
+              // Check if the sword hits an enemy
+              bool swordHit = collison->enemyHitBySword(enemy, sword, 96, 64);
+              
+                std::cout << swordHit << std::endl;
             
+            }
+
         }else if(Input->inMenu==1){
             //in menu view
             Menu->Render();

@@ -6,7 +6,7 @@
 #include "Enemy.hpp"
 #include "Disk.hpp"
 #include "Sword.hpp"
-
+#include "EnemyManager.hpp"
 
 class Collison
 {

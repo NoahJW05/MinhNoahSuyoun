@@ -8,26 +8,22 @@
 #include <ctime>   
 #include <math.h>
 
+
 class Enemy : public GameObject {
- protected:
-    int EHealth;
-    int EDamage;
-    int Evelocity;
-    bool isAlive;
-    Player* player;
-    float speed;
-    float angle;
+private:
+    bool isAlive;        // Enemy's alive status
+    float speed;        // Speed of the enemy
+    float angle;        // Current angle towards the player
+    Player* player;     // Pointer to the player object
 
- public:
-    Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy,int scale, Player* player);
+public:
+    Enemy(const char* texturesheet, int IMHeight, int IMWidth, float fx, float fy, int scale, Player* player);
+    
     void SpawnEnemyRandomly();
-
     void FollowPlayer(Player* player);
-
     void Update();
     void Render();
 };
 
-
-#endif
+#endif // ENEMY_HPP
 
