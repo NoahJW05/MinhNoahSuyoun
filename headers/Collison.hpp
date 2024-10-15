@@ -7,6 +7,7 @@
 #include "Disk.hpp"
 #include "Sword.hpp"
 #include "EnemyManager.hpp"
+#include "Gun.hpp"
 
 class Collison
 {
@@ -20,7 +21,7 @@ Collison();
 bool beenHit(Enemy* enemy,Player* player,float ARadius,float DRadius);
 bool enemyHitByDisk(Enemy* enemy,Disk* disk,float ARadius,float DRadius);
 bool enemyHitBySword(Enemy* enemy, Sword* sword, float ARadius, float DRadius);
-
+bool enemyHitByGun(Enemy* enemy, Gun* gun, float ARadius, float DRadius);
 };
 
 #endif //COLLISON_HPP

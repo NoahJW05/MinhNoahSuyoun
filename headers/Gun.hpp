@@ -13,7 +13,9 @@ public:
     void Update();          // Updates all projectiles
     void Render();          // Renders all projectiles
 
-private:
+    std::vector<Projectile*>& getProjectiles() { return projectiles; }
+
+   private:
     Player* player;
     const char* projectileTexture;
     int projIMHeight;

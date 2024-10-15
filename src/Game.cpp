@@ -136,10 +136,25 @@
             sword->Update();
             gun->Shoot(90);
             gun->Update();
-            
 
-             
-            
+            for (auto enemy : enemyManager->getEnemies()) {
+              bool beenHit = collison->beenHit(
+                  enemy, player, 32,16);  // Check if the player is hit by an enemy
+
+              // std::cout << beenHit << std::endl;
+
+              // Check if the sword hits an enemy
+              bool swordHit = collison->enemyHitBySword(enemy, sword, 96, 64);
+
+              //std::cout << swordHit << std::endl;
+
+              bool GunHit = collison->enemyHitByGun(enemy, gun, 32, 16);
+
+              std::cout << swordHit << std::endl;
+
+
+            }
+
         }else if(Input->inMenu==1){
             //in menu view
             Menu->Update();
@@ -182,18 +197,6 @@
                 disk2 -> Render();
             }
 
-            for (auto enemy : enemyManager->getEnemies()) {
-              bool beenHit = collison->beenHit(enemy, player, 32,16);  // Check if the player is hit by an enemy
-             
-                std::cout << beenHit << std::endl;
-              
-
-              // Check if the sword hits an enemy
-              bool swordHit = collison->enemyHitBySword(enemy, sword, 96, 64);
-              
-                std::cout << swordHit << std::endl;
-            
-            }
 
         }else if(Input->inMenu==1){
             //in menu view
